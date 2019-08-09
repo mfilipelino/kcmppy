@@ -4,13 +4,13 @@ from multiprocessing import Pool
 
 TOPIC = 'bwpkpr'
 GROUP_ID = 'D'
-BOOTSTRAP_SERVERS = ['back1145.back.b2w:9092',
-                     'back1146.back.b2w:9092',
-                     'back1151.back.b2w:9092',
-                     'back1152.back.b2w:9092',
-                     'back1153.back.b2w:9092',
-                     'back1154.back.b2w:9092',
-                     'back1155.back.b2w:9092'
+BOOTSTRAP_SERVERS = ['back1145.back:9092',
+                     'back1146.back:9092',
+                     'back1151.back:9092',
+                     'back1152.back:9092',
+                     'back1153.back:9092',
+                     'back1154.back:9092',
+                     'back1155.back:9092'
                      ]
 
 AUTO_OFFSET_RESET = 'earliest'
