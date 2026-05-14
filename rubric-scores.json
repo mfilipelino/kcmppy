@@ -1,53 +1,53 @@
 {
-  "report": "baseline-report.yaml",
+  "report": "static-analysis-report.yaml",
   "rubric": "static-code-analysis.yaml",
   "judge_model": "us.anthropic.claude-opus-4-7",
-  "score": 0.875,
+  "score": 0.8333333333333334,
   "grades": [
     {
       "id": "specific_citations",
-      "grade": 3,
-      "rationale": "The YAML preserves rule codes (E501, UP032, unresolved-import) and per-file scope (consumer.py) with all line-producing tools at status=ok, so findings are traceable though the aggregate itself doesn't list lines."
+      "grade": 2,
+      "rationale": "The aggregate report preserves rule codes (E501, unresolved-import) and per-tool counts; tools that produce line numbers (ruff, ty) ran with status=ok so raw output would be traceable, though the YAML itself lists no line ranges."
     },
     {
       "id": "severity_calibration",
       "grade": 4,
-      "rationale": "bandit.by_severity is all zero, pip_audit severities all zero, and ruff security=0 \u2014 distribution is appropriately uninflated for clean code."
+      "rationale": "Severity distributions are well-calibrated: bandit.by_severity all zero, pip_audit.by_severity all zero, ruff.by_category.security=0, with the only findings being correctness (E501) and a typing error \u2014 no inflation."
     },
     {
       "id": "category_coverage",
       "grade": 3,
-      "rationale": "ruff, ty, bandit, radon, complexipy, vulture, pip_audit, detect_secrets all status=ok covering every Python lens; only mypy is not_installed but ty covers typing redundantly."
+      "rationale": "All lenses covered with status=ok (ruff, ty, bandit, radon, complexipy, vulture, pip-audit, detect-secrets) except mypy which is not_installed; ty covers the typing lens so coverage is effectively complete but mypy's absence is unexplained."
     },
     {
       "id": "no_speculation",
       "grade": 4,
-      "rationale": "Every count (ruff total_violations=2, ty total_errors=1) comes from a tool with status=ok, and mypy is explicitly marked not_installed rather than fabricating counts."
+      "rationale": "Every count is derivable from a tool with status=ok, and the report clearly distinguishes mypy.status=not_installed from the other tools' ok status, avoiding phantom counts."
     },
     {
       "id": "fix_direction",
       "grade": 2,
-      "rationale": "Per adaptation note, N/A default; by_rule codes like UP032 and unresolved-import do implicitly pin fix direction."
+      "rationale": "Per rubric adaptation, graded 2 by default; by_rule entries like ruff E501 and ty unresolved-import do pin fix direction implicitly via rule codes."
     },
     {
       "id": "tool_grounding",
       "grade": 4,
-      "rationale": "by_rule cites specific codes (E501, UP032, unresolved-import) for findings, and clean axes show structural evidence (radon total_functions=1, complexipy total_functions=1, bandit total=0) proving tools reached the code."
+      "rationale": "Findings cite specific rule codes (ruff E501, ty unresolved-import), and clean passes are evidenced by structural counts proving the tools scanned real code (radon.cc.total_functions=1, complexipy.total_functions=1, bandit ran with version 1.8.6 yielding zero)."
     },
     {
       "id": "complexity_metrics",
       "grade": 4,
-      "rationale": "radon.cc.max=2 with over_threshold_10=0, complexipy.max=2 with over_threshold_15=0, radon.mi.min=61.68 with under_20=0, and halstead.max_volume=27.0 \u2014 all measured numbers with thresholds present."
+      "rationale": "Full complexity telemetry present: radon.cc.max=2 with over_threshold_10=0, complexipy.max=2 with over_threshold_15=0, radon.mi.min=61.68 with under_20=0, and halstead.max_volume=27.0 \u2014 thresholds and measured numbers all recorded."
     },
     {
       "id": "restraint",
       "grade": 4,
-      "rationale": "Report is pure structured counts with no editorializing; E501/UP032 are surfaced as tool-detected rule codes rather than style preaching."
+      "rationale": "Report is purely numeric/structural with no editorializing, as the adaptation note anticipates."
     },
     {
       "id": "not_findings_honesty",
       "grade": 4,
-      "rationale": "Clean distributions abound: radon.cc {A:1}, radon.mi {A:1}, bandit all-zero severities, detect_secrets.new_since_baseline=0, pip_audit.vulnerabilities=0, vulture.dead_items=0 \u2014 implicit not-findings across every axis."
+      "rationale": "Clean distributions are richly documented: radon.cc.distribution {A:1}, radon.mi.distribution {A:1}, detect_secrets.new_since_baseline=0, pip_audit.vulnerabilities=0, and bandit.total=0 cross-agreeing with ruff.by_category.security=0."
     }
   ]
 }
