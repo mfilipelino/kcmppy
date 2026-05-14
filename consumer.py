@@ -28,11 +28,7 @@ def run(process_id):
 
     with open('process_' + str(process_id) + '.out', 'w') as outfile:
         for msg in consumer:
-            s = 'process_id: {process_id} topic: {topic}, partition: {partition} offset: {offset}\n'.format(
-                process_id=process_id,
-                topic=msg.topic,
-                partition=msg.partition,
-                offset=msg.offset)
+            s = f'process_id: {process_id} topic: {msg.topic}, partition: {msg.partition} offset: {msg.offset}\n'
             outfile.write(s)
 
 
