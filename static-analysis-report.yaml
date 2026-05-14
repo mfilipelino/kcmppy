@@ -1,8 +1,8 @@
-generated_at: "2026-05-14T16:28:07+00:00"
+generated_at: "2026-05-14T16:56:18+00:00"
 git:
-  branch: eval/baseline-v1
+  branch: eval/improve-v1-temp
   dirty: true
-  sha: a6a93cdca765021617d534e59dde59c759c0499c
+  sha: bc4584881841148edfbe74d41b9f35508e3aceff
 schema_version: 1
 scope:
   files_analyzed: 1
@@ -15,7 +15,7 @@ summary:
   maintainability_concerns: 0
   security_violations: 0
   type_errors: 1
-  violations_total: 3
+  violations_total: 1
 tools:
   bandit:
     by_confidence:
@@ -79,21 +79,19 @@ tools:
     raw:
       comment_ratio: 0.0
       total_lloc: 19
-      total_sloc: 35
+      total_sloc: 34
     status: ok
   ruff:
     by_category:
       complexity: 0
-      correctness: 1
-      modernization: 1
+      correctness: 0
+      modernization: 0
       other: 0
       security: 0
       style: 0
-    by_rule:
-      E501: 1
-      UP032: 1
+    by_rule: {}
     status: ok
-    total_violations: 2
+    total_violations: 0
     version: ruff 0.15.13
   ty:
     by_category:

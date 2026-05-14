@@ -1,5 +1,5 @@
 {
-  "report": "baseline-report.yaml",
+  "report": "static-analysis-report.yaml",
   "rubric": "static-code-analysis.yaml",
   "judge_model": "us.anthropic.claude-opus-4-7",
   "score": 0.875,
@@ -7,47 +7,47 @@
     {
       "id": "specific_citations",
       "grade": 3,
-      "rationale": "The YAML preserves rule codes (E501, UP032, unresolved-import) and per-file scope (consumer.py) with all line-producing tools at status=ok, so findings are traceable though the aggregate itself doesn't list lines."
+      "rationale": "The aggregate report doesn't include line numbers, but ty.by_category.unresolved-import: 1 and files_analyzed: consumer.py make the single finding traceable, and all tools producing line-level data ran with status: ok."
     },
     {
       "id": "severity_calibration",
       "grade": 4,
-      "rationale": "bandit.by_severity is all zero, pip_audit severities all zero, and ruff security=0 \u2014 distribution is appropriately uninflated for clean code."
+      "rationale": "bandit.by_severity is all zeros, pip_audit.by_severity all zeros, and ruff by_category.security: 0 \u2014 no severity inflation, the single issue is a type error not labeled critical."
     },
     {
       "id": "category_coverage",
       "grade": 3,
-      "rationale": "ruff, ty, bandit, radon, complexipy, vulture, pip_audit, detect_secrets all status=ok covering every Python lens; only mypy is not_installed but ty covers typing redundantly."
+      "rationale": "ruff, ty, bandit, radon, complexipy, vulture, pip_audit, detect_secrets all have status: ok; only mypy is not_installed, but ty covers the typing lens redundantly."
     },
     {
       "id": "no_speculation",
       "grade": 4,
-      "rationale": "Every count (ruff total_violations=2, ty total_errors=1) comes from a tool with status=ok, and mypy is explicitly marked not_installed rather than fabricating counts."
+      "rationale": "Every nonzero count (type_errors: 1, violations_total: 1) comes from ty with status: ok, and the report cleanly distinguishes mypy.status: not_installed from ok tools."
     },
     {
       "id": "fix_direction",
       "grade": 2,
-      "rationale": "Per adaptation note, N/A default; by_rule codes like UP032 and unresolved-import do implicitly pin fix direction."
+      "rationale": "Per adaptation note, N/A defaults to 2; ty.by_category.unresolved-import does pin the fix direction (resolve the import)."
     },
     {
       "id": "tool_grounding",
       "grade": 4,
-      "rationale": "by_rule cites specific codes (E501, UP032, unresolved-import) for findings, and clean axes show structural evidence (radon total_functions=1, complexipy total_functions=1, bandit total=0) proving tools reached the code."
+      "rationale": "The one finding cites ty's specific rule category (unresolved-import), and clean-pass evidence is strong \u2014 radon.cc.total_functions: 1 with max: 2, complexipy.total_functions: 1, radon.mi.total_modules: 1 prove tools reached the code."
     },
     {
       "id": "complexity_metrics",
       "grade": 4,
-      "rationale": "radon.cc.max=2 with over_threshold_10=0, complexipy.max=2 with over_threshold_15=0, radon.mi.min=61.68 with under_20=0, and halstead.max_volume=27.0 \u2014 all measured numbers with thresholds present."
+      "rationale": "Full threshold coverage: radon.cc.max: 2, over_threshold_10: 0, complexipy.max: 2, over_threshold_15: 0, radon.mi.min: 61.67, under_20: 0, halstead.max_volume: 27.0, functions_over_1000_volume: 0."
     },
     {
       "id": "restraint",
       "grade": 4,
-      "rationale": "Report is pure structured counts with no editorializing; E501/UP032 are surfaced as tool-detected rule codes rather than style preaching."
+      "rationale": "Report is pure measurement with no editorializing; ruff by_category.style: 0 confirms no style nitpicking."
     },
     {
       "id": "not_findings_honesty",
       "grade": 4,
-      "rationale": "Clean distributions abound: radon.cc {A:1}, radon.mi {A:1}, bandit all-zero severities, detect_secrets.new_since_baseline=0, pip_audit.vulnerabilities=0, vulture.dead_items=0 \u2014 implicit not-findings across every axis."
+      "rationale": "Multiple clean distributions serve as implicit not-findings: radon.cc.distribution {A:1}, radon.mi.distribution {A:1}, detect_secrets.new_since_baseline: 0, pip_audit.vulnerabilities: 0, vulture.dead_items: 0."
     }
   ]
 }
