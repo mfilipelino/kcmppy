@@ -1,0 +1,53 @@
+{
+  "report": "baseline-report.yaml",
+  "rubric": "static-code-analysis.yaml",
+  "judge_model": "us.anthropic.claude-opus-4-7",
+  "score": 0.875,
+  "grades": [
+    {
+      "id": "specific_citations",
+      "grade": 3,
+      "rationale": "The YAML preserves rule codes (E501, UP032, unresolved-import) and per-file scope (consumer.py) with all line-producing tools at status=ok, so findings are traceable though the aggregate itself doesn't list lines."
+    },
+    {
+      "id": "severity_calibration",
+      "grade": 4,
+      "rationale": "bandit.by_severity is all zero, pip_audit severities all zero, and ruff security=0 \u2014 distribution is appropriately uninflated for clean code."
+    },
+    {
+      "id": "category_coverage",
+      "grade": 3,
+      "rationale": "ruff, ty, bandit, radon, complexipy, vulture, pip_audit, detect_secrets all status=ok covering every Python lens; only mypy is not_installed but ty covers typing redundantly."
+    },
+    {
+      "id": "no_speculation",
+      "grade": 4,
+      "rationale": "Every count (ruff total_violations=2, ty total_errors=1) comes from a tool with status=ok, and mypy is explicitly marked not_installed rather than fabricating counts."
+    },
+    {
+      "id": "fix_direction",
+      "grade": 2,
+      "rationale": "Per adaptation note, N/A default; by_rule codes like UP032 and unresolved-import do implicitly pin fix direction."
+    },
+    {
+      "id": "tool_grounding",
+      "grade": 4,
+      "rationale": "by_rule cites specific codes (E501, UP032, unresolved-import) for findings, and clean axes show structural evidence (radon total_functions=1, complexipy total_functions=1, bandit total=0) proving tools reached the code."
+    },
+    {
+      "id": "complexity_metrics",
+      "grade": 4,
+      "rationale": "radon.cc.max=2 with over_threshold_10=0, complexipy.max=2 with over_threshold_15=0, radon.mi.min=61.68 with under_20=0, and halstead.max_volume=27.0 \u2014 all measured numbers with thresholds present."
+    },
+    {
+      "id": "restraint",
+      "grade": 4,
+      "rationale": "Report is pure structured counts with no editorializing; E501/UP032 are surfaced as tool-detected rule codes rather than style preaching."
+    },
+    {
+      "id": "not_findings_honesty",
+      "grade": 4,
+      "rationale": "Clean distributions abound: radon.cc {A:1}, radon.mi {A:1}, bandit all-zero severities, detect_secrets.new_since_baseline=0, pip_audit.vulnerabilities=0, vulture.dead_items=0 \u2014 implicit not-findings across every axis."
+    }
+  ]
+}
